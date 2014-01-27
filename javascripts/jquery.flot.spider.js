@@ -160,6 +160,9 @@ THE SOFTWARE.
             if(!fill){ fill = false;}
             ctx.beginPath();
             ctx.lineWidth = serie.spider.connection.width;
+            if (serie.spider.connection.dash) {
+                ctx.setLineDash(serie.spider.connection.dash);
+            }
             ctx.strokeStyle = c;
             ctx.fillStyle = c;
             d = calculatePosition(serie,data.ranges,0);
@@ -175,6 +178,10 @@ THE SOFTWARE.
             ctx.lineTo(pos.x,pos.y);
             if(fill === true){ ctx.fill();} 
             else { if(serie.spider.fill === true){ ctx.fill();} else{ ctx.stroke();} }
+
+            if (serie.spider.connection.dash) {
+                ctx.setLineDash([]);
+            }
         }
         function drawspider(ctx, opt){
             var cnt = data[0].data.length,i;
