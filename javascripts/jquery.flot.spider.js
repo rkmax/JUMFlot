@@ -275,8 +275,28 @@ THE SOFTWARE.
                 if(between(pos.y,startPoint.y+10,startPoint.y-10)){ extraY = 0;}
                 if(pos.x < breakPoint.x){ extraX = (metrics.width*-1)-metrics.width/2;}else{ extraX = 0;}
                 if(between(pos.x,startPoint.x+10,startPoint.x-10)) { extraX = metrics.width/2; }
-                ctx.fillText(data[0].spider.legs.data[j].label, pos.x + extraX, pos.y + extraY);
+                //ctx.fillText(data[0].spider.legs.data[j].label, pos.x + extraX, pos.y + extraY);
+                wrapText(ctx, data[0].spider.legs.data[j].label, pos.x + (extraX/2), pos.y + extraY, 180, 25)
             }
+            function wrapText(context, text, x, y, maxWidth, lineHeight) {
+                    var words = text.split(' ');
+                    var line = '';
+
+                    for(var n = 0; n < words.length; n++) {
+                      var testLine = line + words[n] + ' ';
+                      var metrics = context.measureText(testLine);
+                      var testWidth = metrics.width;
+                      if (testWidth > maxWidth && n > 0) {
+                        context.fillText(line, x, y);
+                        line = words[n] + ' ';
+                        y += lineHeight;
+                      }
+                      else {
+                        line = testLine;
+                      }
+                    }
+                    context.fillText(line, x, y);
+                  }
         }
         function calculatePosition(serie,ranges,j,v){
             var p;
